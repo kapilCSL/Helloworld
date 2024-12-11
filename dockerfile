@@ -1,17 +1,26 @@
-# Step 1: Use the official OpenJDK base image
-FROM openjdk:17-slim
+# Step 1: Build the Java application using OpenJDK
+FROM openjdk:17-slim AS builder
 
-# Step 2: Set the working directory in the container
 WORKDIR /app
+COPY ./app /app
+RUN javac HelloWorld.java
 
-# Step 3: Copy the Java source code into the container
-COPY HelloWorldServer.java .
+# Step 2: Set up the web server with Ubuntu and Apache2
+FROM ubuntu:20.04
 
-# Step 4: Compile the Java program
-RUN javac HelloWorldServer.java
+# Install Apache2 and OpenJDK (Java)
+RUN apt-get update && \
+    apt-get install -y apache2 openjdk-17-jre && \
+    apt-get clean
 
-# Step 5: Expose port 8080 to access the server
-EXPOSE 8080
+# Copy the compiled Java class from the builder image
+COPY --from=builder /app/HelloWorld.class /var/www/html/
 
-# Step 6: Run the server when the container starts
-CMD ["java", "HelloWorldServer"]
+# Copy the HTML page to serve via Apache
+COPY ./web/index.html /var/www/html/
+
+# Expose port 80 for the Apache server
+EXPOSE 80
+
+# Command to run the Java program and Apache2 server
+CMD java -cp /var/www/html HelloWorld && apachectl -D FOREGROUND
