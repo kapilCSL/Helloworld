@@ -3,7 +3,7 @@ FROM openjdk:17-slim AS builder
 
 WORKDIR /app
 COPY ./app /app
-RUN javac HelloWorld.java
+RUN javac app/HelloWorld.java
 
 # Step 2: Set up the web server with Ubuntu and Apache2
 FROM ubuntu:20.04
