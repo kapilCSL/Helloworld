@@ -5,9 +5,9 @@ public class HelloWorldHttpServer {
 
     public static void main(String[] args) {
         try {
-            // Create a ServerSocket that listens on port 8080
-            ServerSocket serverSocket = new ServerSocket(8000);
-            System.out.println("Server started at http://localhost:8000");
+            // Create a ServerSocket that listens on port 8045
+            ServerSocket serverSocket = new ServerSocket(8045);
+            System.out.println("Server started at http://localhost:8045");
 
             // Infinite loop to handle client requests
             while (true) {
