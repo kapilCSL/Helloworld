@@ -10,8 +10,8 @@ COPY HelloWorldHttpServer.java .
 # Step 4: Compile the Java program
 RUN javac HelloWorldHttpServer.java
 
-# Step 5: Expose port 8080 to access the server
-EXPOSE 8080
+# Step 5: Expose port 8000 to access the server
+EXPOSE 8000
 
 # Step 6: Run the server when the container starts
 CMD ["java", "HelloWorldHttpServer"]
